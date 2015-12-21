@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">   
+    <composite:interface>
+        <composite:attribute name="radioValue"/>
+        <composite:attribute name="radioOptions"/>
+        <composite:attribute name="clientLabel"/>
+        <composite:attribute name="clientValue"/>
+        <composite:attribute name="selectMenuLabel"/>
+        <composite:attribute name="selectMenuValue"/>
+        <composite:attribute name="mapKeyValues"/>
+        <composite:attribute name="emailLabel"/>
+        <composite:attribute name="emailValue"/>
+        <composite:attribute name="messagelLabel"/>
+        <composite:attribute name="messageValue"/>
+        <composite:attribute name="buttonText"/>
+        <composite:attribute name="actionMethod"
+                             method-signature="java.lang.String action()"/>
+    </composite:interface>
+    <composite:implementation>        
+        <p>
+            <h:form id="detailsForm" prependId="false" class="form-inline">                
+                <h:selectOneRadio requiredMessage="#{copy.validateRadio}" 
+                                  id="radioValue" required="true" 
+                                  layout="lineDirection" value="#{cc.attrs.radioValue}">                
+                    <f:selectItems value="#{cc.attrs.radioOptions}"/>
+                </h:selectOneRadio>
+                <h:message errorStyle="padding: 5px; line-height: 1.4286;
+                           background-color: #EEEEEE; color: #EE3630;
+                           vertical-align: top; border-top: 1px solid #ffffff;" for="radioValue"/><p/>
+                <!--</div>    -->                
+                <h:panelGrid columns="2">
+                    <div class="form-group">
+                        <label for="clientName">#{cc.attrs.clientLabel}</label>
+                        <h:panelGroup>
+                            <h:inputText validatorMessage="#{copy.validateName}" class="form-control" id="clientName" value="#{cc.attrs.clientValue}">
+                                <f:validateLength minimum="4" maximum="20"/>
+                            </h:inputText>
+                            <p class="help-block"> <h:message errorStyle="margin-top: 1em; padding: 5px; line-height: 1.4286;
+                                                              background-color: #EEEEEE; color: #EE3630;
+                                                              vertical-align: top; border-top: 1px solid #ffffff;
+                                                              border-radius: 10px;" for="clientName"/></p>                           
+                        </h:panelGroup>                        
+                    </div>
+                    <div class="form-group">
+                        <label for="appTypes">#{cc.attrs.selectMenuLabel}</label>
+                        <h:selectOneMenu class="form-control" id="appTypes" value="#{cc.attrs.selectMenuValue}">
+                            <f:selectItems value="#{cc.attrs.mapKeyValues}" var="entry"
+                                           itemValue="#{entry.value}" itemLabel="#{entry.label}"/>
+                        </h:selectOneMenu>
+                    </div>                        
+                    <div class="form-group">
+                        <label for="clientEmail">#{cc.attrs.emailLabel}</label>
+                        <h:panelGroup>
+                            <p:inputText style="margin-top: 0.75em;"  type="email" required="true" requiredMessage="#{copy.requiredEmail}"
+                                         validatorMessage="#{copy.validateEmail}" 
+                                         id="clientEmail"  class="form-control" value="#{cc.attrs.emailValue}"/>
+                            <p class="help-block"> <h:message errorStyle="margin-top: 1em; padding: 5px; line-height: 1.4286;
+                                                              background-color: #EEEEEE; color: #EE3630;
+                                                              vertical-align: top; border-top: 1px solid #ffffff;
+                                                              border-radius: 10px;" for="clientEmail"/></p>
+                        </h:panelGroup>
+                    </div>                           
+                    <div class="form-group">
+                        <label for="messageTxtArea">#{cc.attrs.messagelLabel}</label>                                
+                        <h:inputTextarea class="form-control" rows="3" id="messageTxtArea" value="#{cc.attrs.messageValue}"/>
+                    </div>
+                </h:panelGrid>
+                <h:commandButton onclick="submitAll" class="btn btn-success" style="margin-top: 0.5em" value="#{cc.attrs.buttonText}"
+                                 type="submit" action="#{cc.attrs.actionMethod}"/>
+            </h:form>   
+        </p>
+    </composite:implementation>
+</html>
